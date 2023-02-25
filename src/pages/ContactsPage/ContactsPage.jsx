@@ -5,18 +5,24 @@ import { Filter } from 'components/Filter/Filter';
 import { selectFilteredContacts } from '../../redux/contacts/filter/filter.selector';
 import { fetchContacts } from 'redux/contacts/contacts/contacts.operations';
 import { useEffect } from 'react';
+import { selectAuthToken } from 'redux/auth/auth.selectors';
 
 
 
 const ContactsPage = () => {
      
     const filteredList = useSelector(selectFilteredContacts);
+    const token = useSelector(selectAuthToken);
+
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(fetchContacts());
-    }, [dispatch]);
+
+        if (token) {
+            dispatch(fetchContacts());
+          }
+    }, [dispatch, token]);
      
 
 
@@ -24,7 +30,7 @@ const ContactsPage = () => {
         <>
             <Filter />
 
-            {filteredList.length === 0 ? (<p>No matches...</p>
+            {filteredList.length === 0 ? (<p>Let's add something here!</p>
             ):(
                  <ul className="list-group">
 

@@ -4,7 +4,7 @@ import image from './personal_phone_book.png';
 
 const HomePage = () => {
     return (
-        <div className="card m-3 border border-1" style={{ width: 1040}}>
+        <div className="card m-3 border border-1" style={{ width: 1055}}>
             <div className="row g-0">
                 <div className="col-md-4">
                     <img src={image} className="img-fluid rounded-start"  style={{ width: 400}}alt="personal_phone_book" />

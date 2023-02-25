@@ -1,5 +1,5 @@
 import React, { useEffect,lazy , Suspense} from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 
 import { useDispatch} from 'react-redux';
@@ -9,7 +9,6 @@ import { useDispatch} from 'react-redux';
 import { Layout } from './Layout/Layout';
 import HomePage from 'pages/HomePage/HomePage';
 import { refreshUser } from 'redux/auth/auth.operations';
-import { fetchContacts } from '../redux/contacts/contacts/contacts.operations';
 import { PublicRoute } from './AuthRouts/PublicRoute';
 import { PrivateRoute } from './AuthRouts/PrivateRoute';
 
@@ -27,7 +26,6 @@ export const App = () => {
 
   useEffect(() => {
     dispatch(refreshUser());
-    dispatch(fetchContacts());
   }, [dispatch]);
 
   return (
@@ -47,6 +45,7 @@ export const App = () => {
               <Route path="/contacts" element={<ContactsPage />} />
               <Route path="/add-contact" element={<AddContactPage />} />
             </Route>
+            <Route path="*" element={<Navigate to="" />} />
 
             </Routes>
           </Suspense> 
