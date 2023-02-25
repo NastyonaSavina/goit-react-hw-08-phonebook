@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'redux/operations';
-import { selectContacts } from 'redux/selectors';
+import { addContact } from 'redux/contacts/contacts/contacts.operations';
+import { selectContacts } from 'redux/contacts/contacts/contacts.selectors';
 import { useState } from 'react';
 
 
@@ -73,7 +73,7 @@ const AddContactPage = () => {
         <div className="form-floating my-4">
           <input
             id="number"
-            type="number"
+            type="text"
             name="number"
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
 

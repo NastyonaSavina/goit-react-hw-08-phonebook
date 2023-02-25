@@ -1,9 +1,8 @@
-import axios from "axios";
-import { publicApi } from "https/https";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from 'react-toastify';
+import { register } from "redux/auth/auth.operations";
 
 
 
@@ -33,8 +32,8 @@ const RegisterPage = () => {
 
     try {
         setIsLoading(true);
-        await axios.post('https://connections-api.herokuapp.com/users/signup', values);
-        // await dispatch(authLoginThunk({ email: values.email, password: values.password })).unwrap();
+        await dispatch(register(values)).unwrap();
+
 
         setIsLoading(false);
         toast.success('Success!');

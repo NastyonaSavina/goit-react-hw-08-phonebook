@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { selectAuthStatus } from "redux/auth/auth.selector";
-import { authLoginThunk } from "redux/auth/auth.thunk";
-import { STATUS } from '../../constants/status.constants';
+import { logIn } from "redux/auth/auth.operations";
+
 
 
 
@@ -15,8 +16,9 @@ const initialState = {
 
 const LoginPage = () => { 
 
-const dispatch = useDispatch();
-    const status = useSelector(selectAuthStatus);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
 
     const [values, setValues] = useState(initialState);
 
@@ -26,10 +28,14 @@ const dispatch = useDispatch();
     };
 
     const handleSubmit = async event => {
-        event.preventDefault();
-        try {
-        await dispatch(authLoginThunk(values)).unwrap();
+      event.preventDefault();
+      const form = event.currentTarget;
+
+      try {
+        await dispatch(logIn(values)).unwrap();
+        form.reset();
         toast.success('Success');
+        navigate('/contacts', { replace: true });
         } catch {
         toast.error('Error');
         }
@@ -39,7 +45,6 @@ const dispatch = useDispatch();
 
      return (
     <>
-        {status === STATUS.loading && <p>Loading ...</p>}
 
       <form action="#" className="mt-5 mx-auto p-0" style={{ width: '450px' }} onSubmit={handleSubmit} >
         <h1 className="h3 mb-3 fw-normal">Login page</h1>

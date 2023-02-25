@@ -1,30 +1,32 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { selectedFilter } from 'redux/selectors';
-import { setFilter } from '../../redux/filter.slice';
-import styles from '../Filter/Filter.module.css';
+import { selectedFilter } from 'redux/contacts/contacts/contacts.selectors';
+import { setFilter } from '../../redux/contacts/filter/filter.slice';
 
 
 export const Filter = () => {
 
-  const dispatch = useDispatch();
 
-  const value = useSelector(selectedFilter);
-  const handleOnChange = event => dispatch(setFilter(event.target.value));
+  const dispatch = useDispatch();
+  const filter = useSelector(selectedFilter);
+  const handleOnChange = e => dispatch(setFilter(e.target.value));
 
   
     return (
-      <>
-        <label htmlFor="search" className={styles.label}> Find contacts by name</label>
-           <input
+      <form
+        action="#"
+        className="input-group mb-3"
+      >
+        <input
           type="text"
-          className={styles.searchForm}
-          placeholder="Search contact name"
-          value={value}
-          name="filter"
-          id= "search"
+          className="form-control"
+          placeholder="Type to search..."
+          value={filter}
           onChange={handleOnChange}
         />
-         
-      </>      
+
+        {/* <button type="submit" className="btn btn-primary">
+          Search
+        </button> */}
+      </form>
     );
   }

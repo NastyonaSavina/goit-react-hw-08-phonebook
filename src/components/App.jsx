@@ -1,18 +1,17 @@
-import React, { useEffect,lazy } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import React, { useEffect,lazy , Suspense} from 'react';
+import { Routes, Route } from 'react-router-dom';
 
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector} from 'react-redux';
 
 
-import styles from './App.module.css';
-import { ContactForm } from '../components/ContactForm/ContactForm';
-import { ContactList } from './ContactItem/ContactList';
-import { Filter} from './Filter/Filter';
-import { fetchContacts } from 'redux/operations';
-import { selectError, selectIsLoading } from 'redux/selectors';
+
 import { Layout } from './Layout/Layout';
 import HomePage from 'pages/HomePage/HomePage';
+import { refreshUser } from 'redux/auth/auth.operations';
+import { selectIsRefreshing } from 'redux/auth/auth.selectors';
+import { PublicRoute } from './AuthRouts/PublicRoute';
+import { PrivateRoute } from './AuthRouts/PrivateRoute';
 
 const LoginPage = lazy(() => import('../pages/LoginPage/LoginPage'));
 const RegisterPage = lazy(() => import('../pages/RegisterPage/RegisterPage'));
@@ -25,40 +24,33 @@ const ContactsPage = lazy(() => import('../pages/ContactsPage/ContactsPage'));
 
 export const App = () => {
   const dispatch = useDispatch();
-  const isLoading = useSelector(selectIsLoading);
-  const error = useSelector(selectError);
-
-  
+  const isRefreshing  = useSelector(selectIsRefreshing);
 
   useEffect(() => {
-    dispatch(fetchContacts());
+    dispatch(refreshUser());
   }, [dispatch]);
 
   return (
     <>
-      <BrowserRouter basename="goit-react-hw-08-phonebook">
-        <Layout>
-          <Routes>
+      <Layout>
+          <Suspense fallback={<p>Loading...</p>}>
+
+            <Routes>
             <Route path="" element={<HomePage />} />
+            
+            <Route path="" element={<PublicRoute />}>
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<RegisterPage />} />
+            </Route>
+            
+            <Route path="" element={<PrivateRoute />}>
+              <Route path="/contacts" element={<ContactsPage />} />
+              <Route path="/add-contact" element={<AddContactPage />} />
+            </Route>
 
-            <Route path="login" element={<LoginPage />} />
-            <Route path="register" element={<RegisterPage />} />
-            <Route path="add-contact" element={<AddContactPage />} />
-            <Route path="contacts" element={<ContactsPage />} />
-
-
-        </Routes>
-          {/* <h1>Phonebook</h1>
-        <ContactForm />
-        {isLoading && !error && <b> Request in progress...</b>}
-
-        <h2>Contacts</h2>
-          <Filter />
-          <ContactList />  */}
-      
-     
+            </Routes>
+          </Suspense> 
         </Layout>
-      </BrowserRouter>
       
       
     </>
