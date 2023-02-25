@@ -2,6 +2,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/contacts/contacts/contacts.operations';
 import { selectContacts } from 'redux/contacts/contacts/contacts.selectors';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+
 
 
 
@@ -41,7 +44,7 @@ const AddContactPage = () => {
             contact => contact.name.toLowerCase() === Contact.name.toLowerCase()
         )
         ) {
-        return alert(`${Contact.name} is already in contacts.`);
+        return toast.warning(`${Contact.name} is already in contacts.`);
         }
 
         dispatch(addContact(Contact));
