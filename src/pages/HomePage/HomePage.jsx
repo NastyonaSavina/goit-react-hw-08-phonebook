@@ -13,7 +13,7 @@ const HomePage = () => {
                     <div className="card-body">
                         <h5 className="card-title">Hello! It's you personal phonebook here</h5>
                         <p className="card-text md-5"  >Let organise all your important contacts in this convenient app</p>
-                        <ul className="list-group list-group-numbered md-5" style={{ width: 200}}>
+                        <ul className="list-group list-group-numbered mb-4" style={{ width: 200}}>
                             <li className="list-group-item border border-0">Simply</li>
                             <li className="list-group-item border border-0">Reliably</li>
                             <li className="list-group-item border border-0">Available anywhere</li>

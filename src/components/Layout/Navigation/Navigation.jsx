@@ -1,3 +1,4 @@
+import { Logo } from 'components/Logo/Logo';
 import { UserMenu } from 'components/UserMenu/UserMenu';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
@@ -13,7 +14,8 @@ export const Navigation = () => {
         <>
             <div className="d-flex flex-column justify-content-between h-100">
                 <div className="d-flex flex-column justify-content-between">
-                    {!loggedIn ? (<p className="m-3"> Please sign in!</p>) : (<UserMenu />)} 
+                    <Logo />
+                    {loggedIn && (<UserMenu />)} 
 
                     {!loggedIn ? (
                         <>
